@@ -95,57 +95,58 @@
     </script>
 
 <script>
-     document.addEventListener("DOMContentLoaded", function () {
-    const images = document.querySelectorAll(".fv-img");
-    const fixedBtn = document.querySelector(".fixed-btn-wrapper");
-    const ctaBtn = document.querySelector(".cta-btn");
-
-    let imagesLoaded = 0;
-
-    function checkAllImagesLoaded() {
-      if (imagesLoaded >= images.length) {
-        // すべての画像が読み込まれた後に observer を設定
-        setupObserver();
+    document.addEventListener("DOMContentLoaded", function () {
+      const images = document.querySelectorAll(".fv-img");
+      const fixedBtn = document.querySelector(".fixed-btn-wrapper");
+      const ctaBtn = document.querySelector(".cta-btn");
+    
+      let imagesLoaded = 0;
+    
+      function checkAllImagesLoaded() {
+        if (imagesLoaded >= images.length) {
+          // すべての画像が読み込まれたら、スクロール監視を開始
+          setupScrollCheck();
+        }
       }
-    }
-
-    images.forEach((img) => {
-      if (img.complete && img.naturalHeight !== 0) {
-        imagesLoaded++;
-        checkAllImagesLoaded();
-      } else {
-        img.addEventListener("load", () => {
+    
+      images.forEach((img) => {
+        if (img.complete && img.naturalHeight !== 0) {
           imagesLoaded++;
           checkAllImagesLoaded();
-        });
-        img.addEventListener("error", () => {
-          imagesLoaded++;
-          checkAllImagesLoaded();
-        });
-      }
-    });
-
-    function setupObserver() {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
+        } else {
+          img.addEventListener("load", () => {
+            imagesLoaded++;
+            checkAllImagesLoaded();
+          });
+          img.addEventListener("error", () => {
+            imagesLoaded++;
+            checkAllImagesLoaded();
+          });
+        }
+      });
+    
+      function setupScrollCheck() {
+        function checkCtaVisibility() {
+          const rect = ctaBtn.getBoundingClientRect();
+          const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+          if (isVisible) {
             fixedBtn.classList.remove("visible");
           } else {
             fixedBtn.classList.add("visible");
           }
-        },
-        {
-          root: null,
-          threshold: 0,
         }
-      );
-
-      if (ctaBtn) {
-        observer.observe(ctaBtn);
+    
+        // 最初のチェック
+        checkCtaVisibility();
+    
+        // スクロールイベントでチェック
+        window.addEventListener("scroll", checkCtaVisibility);
+        window.addEventListener("resize", checkCtaVisibility);
       }
-    }
-  });
-</script>
+    });
+    </script>
+        
 
 </body>
 </html>
