@@ -20,7 +20,6 @@ ul {
 
 .cta-btn {
   text-align: center;
-  margin-top: 40px;
 }
 
 .cta-btn img {
@@ -72,4 +71,27 @@ ul {
 
 .slick-next {
   right: 3px;
+}
+
+.fixed-btn-wrapper {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px; /* スマホ余白調整 */
+  box-sizing: border-box;
+  z-index: 9999;
+}
+
+.fixed-btn-wrapper a {
+  display: block;
+  max-width: 100%;
+}
+
+.fixed-btn-wrapper img {
+  width: 100%; /* 必ず100%に */
+  height: auto;
+  display: block;
 }
