@@ -93,7 +93,8 @@ ul {
 
 .fixed-btn-wrapper a {
   display: block;
-  max-width: 100%;
+  max-width: 360px;
+  width: 90%;
 }
 
 .fixed-btn-wrapper img {
