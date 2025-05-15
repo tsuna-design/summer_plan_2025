@@ -74,15 +74,21 @@ ul {
 }
 
 .fixed-btn-wrapper {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
   position: fixed;
   bottom: 20px;
   left: 0;
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 0 16px; /* スマホ余白調整 */
-  box-sizing: border-box;
-  z-index: 9999;
+  z-index: 999;
+}
+
+.fixed-btn-wrapper.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .fixed-btn-wrapper a {
