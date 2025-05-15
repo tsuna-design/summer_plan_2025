@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    
+
   <section class="first-view">
     <div class="main-item">
       <img class="fv-img" src="./image/1.jpg" alt="1" />
@@ -55,97 +55,24 @@
 
   <!-- JS -->
   <script>
-    $(document).ready(function () {
-      $(".slide-items").slick({
-        autoplay: true,
-        autoplaySpeed: 4000,
-        infinite: true,
-        arrows: true,
-        cssEase: "linear",
-        prevArrow: `
-          <button type="button" class="slick-prev">
-            <svg width="30" height="30" viewBox="0 0 100 100">
-              <path
-                d="M60 20 L30 50 L60 80"
-                stroke="#666"
-                stroke-width="8"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>`,
-        nextArrow: `
-          <button type="button" class="slick-next">
-            <svg width="30" height="30" viewBox="0 0 100 100">
-              <path
-                d="M40 20 L70 50 L40 80"
-                stroke="#666"
-                stroke-width="8"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>`,
-      });
-    });
-  </script>
+     document.addEventListener("DOMContentLoaded", function () {
+    const fixedBtn = document.querySelector(".fixed-btn-wrapper");
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const images = document.querySelectorAll(".fv-img");
-      const fixedBtn = document.querySelector(".fixed-btn-wrapper");
-      const ctaBtn = document.querySelector(".cta-btn");
+    function checkScroll() {
+      const scrollY = window.scrollY || window.pageYOffset;
 
-      // 最初は必ず非表示にする（重要）
-      fixedBtn.classList.remove("visible");
-
-      let imagesLoaded = 0;
-
-      function checkAllImagesLoaded() {
-        if (imagesLoaded >= images.length) {
-          // すべての画像が読み込まれたら、スクロール監視を開始
-          setupScrollCheck();
-        }
+      if (scrollY > 1500) { // ←ここで「どれだけスクロールしたら表示するか」を設定
+        fixedBtn.classList.add("visible");
+      } else {
+        fixedBtn.classList.remove("visible");
       }
+    }
 
-      images.forEach((img) => {
-        if (img.complete && img.naturalHeight !== 0) {
-          imagesLoaded++;
-          checkAllImagesLoaded();
-        } else {
-          img.addEventListener("load", () => {
-            imagesLoaded++;
-            checkAllImagesLoaded();
-          });
-          img.addEventListener("error", () => {
-            imagesLoaded++;
-            checkAllImagesLoaded();
-          });
-        }
-      });
-
-      function setupScrollCheck() {
-        function checkCtaVisibility() {
-          const rect = ctaBtn.getBoundingClientRect();
-          const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-
-          if (isVisible) {
-            fixedBtn.classList.remove("visible");
-          } else {
-            fixedBtn.classList.add("visible");
-          }
-        }
-
-        // 最初のチェック
-        checkCtaVisibility();
-
-        // スクロール＆リサイズイベントでチェック
-        window.addEventListener("scroll", checkCtaVisibility);
-        window.addEventListener("resize", checkCtaVisibility);
-      }
-    });
+    // 最初のチェック＆イベント登録
+    checkScroll();
+    window.addEventListener("scroll", checkScroll);
+    window.addEventListener("resize", checkScroll);
+  });
   </script>
 </body>
 </html>
