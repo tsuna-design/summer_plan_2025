@@ -12,17 +12,19 @@
     <title>SUMMER PLAN 2025</title>
 </head>
 <body>
-    <div class="main-item">
-        <img src="./image/1.jpg" alt="1">
-    </div>
-    <div class="main-item">
-        <img src="./image/2.jpg" alt="2">
-    </div>
-    <div class="cta-btn">
-        <a href="https://forms.gle/～～～" target="_blank" rel="noopener noreferrer">
-            <img src="./image/btn_1.png" alt="このチャンスを掴み取る！" />
-        </a>
-    </div>
+    <section class="first-view">
+        <div class="main-item">
+            <img class="fv-img" src="./image/1.jpg" alt="1">
+         </div>
+         <div class="main-item">
+            <img class="fv-img" src="./image/2.jpg" alt="2">
+         </div>
+        <div class="cta-btn">
+            <a id="fv-btn" href="https://forms.gle/～～～" target="_blank" rel="noopener noreferrer">
+                <img src="./image/btn_1.png" alt="このチャンスを掴み取る！" />
+            </a>
+        </div>
+    </section>
     <div class="main-item">
         <img src="./image/3.jpg" alt="3">
     </div>
@@ -91,6 +93,59 @@
             });
         });
     </script>
+
+<script>
+     document.addEventListener("DOMContentLoaded", function () {
+    const images = document.querySelectorAll(".fv-img");
+    const fixedBtn = document.querySelector(".fixed-btn-wrapper");
+    const ctaBtn = document.querySelector(".cta-btn");
+
+    let imagesLoaded = 0;
+
+    function checkAllImagesLoaded() {
+      if (imagesLoaded >= images.length) {
+        // すべての画像が読み込まれた後に observer を設定
+        setupObserver();
+      }
+    }
+
+    images.forEach((img) => {
+      if (img.complete && img.naturalHeight !== 0) {
+        imagesLoaded++;
+        checkAllImagesLoaded();
+      } else {
+        img.addEventListener("load", () => {
+          imagesLoaded++;
+          checkAllImagesLoaded();
+        });
+        img.addEventListener("error", () => {
+          imagesLoaded++;
+          checkAllImagesLoaded();
+        });
+      }
+    });
+
+    function setupObserver() {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            fixedBtn.classList.remove("visible");
+          } else {
+            fixedBtn.classList.add("visible");
+          }
+        },
+        {
+          root: null,
+          threshold: 0,
+        }
+      );
+
+      if (ctaBtn) {
+        observer.observe(ctaBtn);
+      }
+    }
+  });
+</script>
 
 </body>
 </html>
